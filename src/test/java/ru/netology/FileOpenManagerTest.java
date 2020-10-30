@@ -3,14 +3,18 @@ package ru.netology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Collections;
+import java.util.TreeSet;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class FileOpenManagerTest {
     FileOpenManager manager = new FileOpenManager();
     String firstAppValue = "Google";
     String firstAppKey = "html";
     String secondAppValue = "Note";
-    String secondAppKey = "txt";
+    String secondAppKey = "png";
     String thirdAppValue = "Photoshop";
     String thirdAppKey = "png";
 
@@ -21,11 +25,9 @@ class FileOpenManagerTest {
         manager.registerNewApp(thirdAppKey, thirdAppValue);
     }
 
-
     @Test
     void getNameAppToOpenThisDirectory() {
         assertEquals(firstAppValue, manager.getNameAppToOpenThisDirectory(firstAppKey));
-
     }
 
     @Test
@@ -35,9 +37,18 @@ class FileOpenManagerTest {
     }
 
     @Test
-    void getRegisterDirectoryAndApps() {
-        assertEquals(manager.getRegisterDirectory(thirdAppKey), manager.getRegisterApps(thirdAppValue));
-
+    void getRegisterDirectory() {
+        manager.deleteDirectoryApp(firstAppKey);
+        TreeSet<String> expected = new TreeSet<>(Collections.singleton(thirdAppValue));
+        assertEquals(expected, manager.getRegisterApps());
     }
+
+    @Test
+    void getRegisterApps() {
+        manager.deleteDirectoryApp(firstAppKey);
+        TreeSet<String> expected = new TreeSet<>(Collections.singleton(thirdAppKey));
+        assertEquals(expected, manager.getRegisterDirectory());
+    }
+
 
 }

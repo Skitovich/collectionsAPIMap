@@ -2,45 +2,39 @@ package ru.netology;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class FileOpenManager {
-    HashMap <String, String> openManager = new HashMap<>();
+    private final Map<String, String> openManager;
 
-    public void registerNewApp(String key,String value) {
-        openManager.put(key ,value);
+    {
+        openManager = new HashMap<>();
     }
 
-    public String getNameAppToOpenThisDirectory (String key) {
-       return openManager.get(key);
+    public void registerNewApp(String key, String value) {
+        openManager.put(key, value);
     }
 
-    public void deleteDirectoryApp (String key) {
-        openManager.remove(key);
+    public String getNameAppToOpenThisDirectory(String fileExtension) {
+        return openManager.get(fileExtension);
     }
 
-    public Map<String, String> getRegisterDirectory(String key) {
-        Map<String, String> res = new HashMap<>();
-        for (Map.Entry<String, String> entry : openManager.entrySet())
-            if (entry.getKey().equals(key))
-                res.put(entry.getKey(),entry.getValue());
-
-        return res;
+    public void deleteDirectoryApp(String fileExtension) {
+        openManager.remove(fileExtension);
     }
 
-    public Map<String,String> getRegisterApps(String value) {
-        Map<String,String> res = new HashMap<>();
-        for (Map.Entry<String,String> entry : openManager.entrySet())
-            if (entry.getValue().equals(value))
-                res.put(entry.getKey(),entry.getValue());
-
-        return res;
+    public Set<String> getRegisterDirectory() {
+        return new TreeSet<>(openManager.keySet());
     }
 
 
-
-
-
+    public Set<String> getRegisterApps() {
+        return new TreeSet<>(openManager.values());
+    }
 }
+
+
 
 
 
